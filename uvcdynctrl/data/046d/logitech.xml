@@ -1687,5 +1687,22 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
+		
+		<mapping>
+			<name>LED1 Mode</name>
+			<uvc>
+				<control_ref idref="peripheral_led_control_v3"/>
+				<size>2</size>
+				<offset>8</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_LED1_MODE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_MENU</v4l2_type>
+				<menu_entry name="Off" value="0"/>
+				<menu_entry name="On" value="1"/>
+				<menu_entry name="Auto" value="3"/>
+			</v4l2>
+		</mapping>
 	</mappings>
 </config>
