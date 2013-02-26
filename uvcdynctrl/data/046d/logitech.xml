@@ -13,6 +13,9 @@
 		<revision>0.30</revision>
 		<copyright>Copyright (c) 2006-2010 Logitech</copyright>
 		<history>
+			0.31 2012-02-25
+			- Added LED V4L2 control mapping for V3 Logitech cameras
+			
 			0.30, 2010-07-30:
 			- Added support for XU_TEST_PERIPHERAL_ACCESS_EXT_CONTROL.
 
@@ -1654,6 +1657,20 @@
 			<v4l2>
 				<id>V4L2_CID_DISABLE_PROCESSING</id>
 				<v4l2_type>V4L2_CTRL_TYPE_BOOLEAN</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>Raw bits per pixel</name>
+			<uvc>
+				<control_ref idref="logitech_video_raw_bpp"/>
+				<size>8</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_RAW_BITS_PER_PIXEL</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
 		
