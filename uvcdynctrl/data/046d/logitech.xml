@@ -10,9 +10,12 @@
 		<version>1.0</version>
 		<author>Martin Rubli, Logitech</author>
 		<contact>http://www.quickcamteam.net/</contact>
-		<revision>0.31</revision>
+		<revision>0.32</revision>
 		<copyright>Copyright (c) 2006-2010 Logitech</copyright>
 		<history>
+			0.31 2012-03-27
+			- Added blink frequency V4L2 control mapping for V3 Logitech cameras
+			
 			0.31 2012-02-25
 			- Added LED V4L2 control mapping for V3 Logitech cameras
 			
