@@ -10,12 +10,15 @@
 		<version>1.0</version>
 		<author>Martin Rubli, Logitech</author>
 		<contact>http://www.quickcamteam.net/</contact>
-		<revision>0.31</revision>
+		<revision>0.32</revision>
 		<copyright>Copyright (c) 2006-2010 Logitech</copyright>
 		<history>
+			0.32 2013-03-27
+			- Added LED frequency V4L2 control mapping for V3 Logitech cameras
+
 			0.31 2013-02-25
 			- Added LED V4L2 control mapping for V3 Logitech cameras
-			
+
 			0.30, 2010-07-30:
 			- Added support for XU_TEST_PERIPHERAL_ACCESS_EXT_CONTROL.
 
@@ -52,7 +55,7 @@
 
 			0.17, 2008-10-17:
 			- Mark the GET_CUR request as supported for the XU_MOTORCONTROL_FOCUS control.
-		
+
 			0.16, 2008-03-07:
 			- Updated the values of V4L2_CID_PAN_RELATIVE and V4L2_CID_PAN_RELATIVE to work with the latest UVC driver (those values will be part of kernels >= 2.6.26).
 			- Support for two new controls defined by V4L2 starting from 2.6.26: V4L2_CID_PAN_RESET ('Pan Reset') and V4L2_CID_TILT_RESET ('Tilt reset').
@@ -416,7 +419,7 @@
 			<id>CXXU_ROI_CONTROL</id>
 			<value>0x03</value>
 		</constant>
-		
+
 		<!-- Internal V4L2 control identifiers -->
 		<constant type="integer">
 			<id>V4L2_CID_USB_VID</id>
@@ -473,7 +476,7 @@
 			<value>0x0A046D72</value>
 		</constant>
 	</constants>
-	
+
 
 	<!-- Public generic Logitech controls -->
 	<devices>
@@ -481,7 +484,7 @@
 			<match>
 				<vendor_id>0x046d</vendor_id>
 			</match>
-			
+
 			<controls>
 				<control id="logitech_video_processing">
 					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V1</entity>
@@ -541,7 +544,7 @@
 					</requests>
 					<description>
 						Allows control over the state of the first LED.
-						
+
 						Bits 0 to 7 represent the LED mode.
 						Currently, the following modes are available:
 						- 0: Off. The LED is never illuminated, whether or not the device is streaming video.
@@ -583,7 +586,7 @@
 				<!-- Logitech QuickCam Orbit/Sphere AF -->
 				<product_id>0x0994</product_id>
 			</match>
-			
+
 			<controls>
 				<control id="logitech_motor_focus">
 					<entity>UVC_GUID_LOGITECH_MOTOR_CONTROL_V1</entity>
@@ -671,7 +674,7 @@
 			<match>
 				<vendor_id>0x046d</vendor_id>
 			</match>
-			
+
 			<controls>
 				<!-- Controls for the Device Information XU (v1) -->
 				<control id="devinfo_usb_information_control_v1">
@@ -1375,7 +1378,7 @@
 				<vendor_id>0x046d</vendor_id>
 				<product_id>0x080c</product_id>
 			</match>
-			
+
 			<controls>
 				<!-- Controls for the Codec XU -->
 				<control id="codec_encoder_video_format_control">
@@ -1527,7 +1530,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>USB Information</name>
 			<uvc>
@@ -1542,7 +1545,7 @@
 			</v4l2>
 		</mapping>
 		-->
-		
+
 		<!-- V4L2 mappings for the Public UVC controls defined above -->
 		<mapping>
 			<name>Pan (relative)</name>
@@ -1557,7 +1560,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>Tilt (relative)</name>
 			<uvc>
@@ -1571,7 +1574,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>Pan Reset</name>
 			<uvc>
@@ -1585,7 +1588,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>Tilt Reset</name>
 			<uvc>
@@ -1599,7 +1602,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>Focus</name>
 			<uvc>
@@ -1613,7 +1616,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>LED1 Mode</name>
 			<uvc>
@@ -1631,7 +1634,7 @@
 				<menu_entry name="Auto" value="3"/>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>LED1 Frequency</name>
 			<uvc>
@@ -1645,7 +1648,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>Disable video processing</name>
 			<uvc>
@@ -1659,7 +1662,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_BOOLEAN</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>Raw bits per pixel</name>
 			<uvc>
@@ -1673,7 +1676,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>Raw bits per pixel</name>
 			<uvc>
@@ -1687,7 +1690,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-		
+
 		<mapping>
 			<name>LED1 Mode</name>
 			<uvc>
@@ -1704,5 +1707,20 @@
 				<menu_entry name="Auto" value="3"/>
 			</v4l2>
 		</mapping>
+
+		<mapping>
+			<name>LED1 Frequency</name>
+			<uvc>
+				<control_ref idref="peripheral_led_control_v3"/>
+				<size>8</size>
+				<offset>24</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_LED1_FREQUENCY</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
 	</mappings>
 </config>
