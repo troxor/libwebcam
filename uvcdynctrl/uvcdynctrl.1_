@@ -52,7 +52,7 @@ default is little endian use '(BE)' prefix to change:
 \fB\-f\fR, \fB\-\-formats\fR
 List available frame formats
 .TP
-\fB\-S\fR, \fB\-\-save\fR=\fIfilename\fR
+\fB\-W\fR, \fB\-\-save\fR=\fIfilename\fR
 Save device controls state to a file
 .TP
 \fB\-L\fR, \fB\-\-load\fR=\fIfilename\fR
