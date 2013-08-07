@@ -15,7 +15,7 @@ project (UVCDYNCTRL)
 
 add_executable (uvcdynctrl main.c controls.c cmdline.c)
 
-set_target_properties (uvcdynctrl PROPERTIES VERSION 0.2.2)
+set_target_properties (uvcdynctrl PROPERTIES VERSION 0.2.3)
 
 if (NOT DYNCTRL_DATA_DIR)
 	set_target_properties (uvcdynctrl PROPERTIES DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/uvcdynctrl")
