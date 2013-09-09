@@ -2244,16 +2244,16 @@ static CControlId get_control_id_from_v4l2 (int v4l2_id, Device *dev)
 		case V4L2_CID_AUTOBRIGHTNESS:			return CC_AUTO_BRIGHTNESS;	// not supported by libwebcam
 #endif
 #ifdef V4L2_CID_BAND_STOP_FILTER
-		case V4L2_CID_BAND_STOP_FILTER			break;	// not supported by libwebcam
+		case V4L2_CID_BAND_STOP_FILTER:			break;	// not supported by libwebcam
 #endif
 #ifdef V4L2_CID_ROTATE
-		case V4L2_V4L2_CID_ROTATE				break;	// not supported by libwebcam
+		case V4L2_CID_ROTATE:					break;	// not supported by libwebcam
 #endif
 #ifdef V4L2_CID_BG_COLOR
-		case V4L2_CID_BG_COLOR					break;	// not supported by libwebcam
+		case V4L2_CID_BG_COLOR:					break;	// not supported by libwebcam
 #endif
 #ifdef V4L2_CID_CHROMA_GAIN
-		case V4L2_CID_CHROMA_GAIN				break;	// not supported by libwebcam
+		case V4L2_CID_CHROMA_GAIN:				break;	// not supported by libwebcam
 #endif
 
 		// Camera type controls
@@ -2307,10 +2307,10 @@ static CControlId get_control_id_from_v4l2 (int v4l2_id, Device *dev)
 #endif
 
 #ifdef V4L2_CID_IRIS_ABSOLUTE
-		case V4L2_CID_IRIS_ABSOLUTE				return CC_IRIS_ABSOLUTE;
+		case V4L2_CID_IRIS_ABSOLUTE:			return CC_IRIS_ABSOLUTE;
 #endif
 #ifdef V4L2_CID_IRIS_RELATIVE
-		case V4L2_CID_IRIS_RELATIVE				return CC_IRIS_RELATIVE;
+		case V4L2_CID_IRIS_RELATIVE:			return CC_IRIS_RELATIVE;
 #endif
 #ifdef V4L2_CID_LED1_MODE
 		case V4L2_CID_LED1_MODE:				return CC_LOGITECH_LED1_MODE;
