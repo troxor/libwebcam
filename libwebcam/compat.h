@@ -9,17 +9,17 @@
  * Copyright (c) 2006-2009 Logitech.
  *
  * This file is part of libwebcam.
- * 
+ *
  * libwebcam is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * libwebcam is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with libwebcam.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -167,6 +167,11 @@ struct uvc_xu_control_info {
 #ifndef V4L2_CID_PRIVACY
 #define V4L2_CID_PRIVACY				(V4L2_CID_CAMERA_CLASS_BASE+16)
 #endif
-
+#ifndef V4L2_CID_IRIS_ABSOLUTE
+#define V4L2_CID_IRIS_ABSOLUTE                  (V4L2_CID_CAMERA_CLASS_BASE+17)
+#endif
+#ifndef V4L2_CID_IRIS_RELATIVE
+#define V4L2_CID_IRIS_RELATIVE                  (V4L2_CID_CAMERA_CLASS_BASE+18)
+#endif
 
 #endif /* C_COMPAT_H */

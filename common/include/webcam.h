@@ -9,17 +9,17 @@
  * Copyright (c) 2006-2007 Logitech.
  *
  * This file is part of libwebcam.
- * 
+ *
  * libwebcam is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * libwebcam is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with libwebcam.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -115,6 +115,8 @@ typedef enum _CControlId {
 	CC_EXPOSURE_TIME_ABSOLUTE,
 	/// Relative change to the current length of exposure
 	CC_EXPOSURE_TIME_RELATIVE,
+	/// Auto brightness
+	CC_AUTO_BRIGHTNESS,
 
 	// UVC: Optics control
 	/// Enable/disable automatic focus adjustment
@@ -192,10 +194,10 @@ typedef enum _CControlId {
 	CC_LOGITECH_USB_PID,
 	//
 	CC_LOGITECH_USB_BCD,
-	
+
 	/// Base for raw UVC controls
 	CC_UVC_XU_BASE	= 0xFFFF0000,
-	
+
 } CControlId;
 
 
@@ -353,7 +355,7 @@ typedef struct _CDevice {
 	/// a device appears as '/dev/video0', the short name is 'video0'.
 	/// This member is never NULL.
 	char			* shortName;
-	
+
 	/// The human-readable name of the device.
 	/// This member is never NULL.
 	char			* name;
@@ -411,7 +413,7 @@ typedef struct _CControlValue {
 		/// The value of the control for raw cntrols.
 		/// This member is valid only for control type #CC_TYPE_RAW.
 		CControlRawValue	raw;
-		
+
 		/// The value of the control for string controls.
 		/// This member is valid only for control type #CC_TYPE_STRING.
 		CControlRawValue	string;
@@ -476,7 +478,7 @@ typedef struct _CControl {
 			unsigned int	count;
 			/// The list of choice values
 			CControlChoice	* list;
-			
+
 			/// A buffer that contains the names of the #CControlChoice items.
 			/// The @a name fields of the items point to strings within this buffer,
 			/// so there is no need to work with this member directly except
@@ -484,7 +486,7 @@ typedef struct _CControl {
 			//char			* names;
 
 		} choices;
-		
+
 		/// Attributes for string controls.
 		/// The members of this struct are only valid if the type is #CC_TYPE_STRING.
 		/// Note that the length values do not include the terminating null byte.
@@ -528,7 +530,7 @@ typedef struct _CPixelFormat {
 typedef struct _CFrameSize {
 	/// Type of the frame size(s) described (discrete, continuous, step-wise)
 	CFrameSizeTypes	type;
-	
+
 	union {
 		/// Discrete frame size.
 		/// This member is only valid if @a type is #CF_SIZE_DISCRETE.
