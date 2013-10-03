@@ -1560,11 +1560,39 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
+		
+		<mapping>
+			<name>Pan (relative)</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_relative_control_v3"/>
+				<size>16</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_SIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_PAN_RELATIVE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
 
 		<mapping>
 			<name>Tilt (relative)</name>
 			<uvc>
 				<control_ref idref="logitech_motor_pantilt_relative"/>
+				<size>16</size>
+				<offset>16</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_SIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_TILT_RELATIVE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>Tilt (relative)</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_relative_control_v3"/>
 				<size>16</size>
 				<offset>16</offset>
 				<uvc_type>UVC_CTRL_DATA_TYPE_SIGNED</uvc_type>
@@ -1588,11 +1616,39 @@
 				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
 			</v4l2>
 		</mapping>
+		
+		<mapping>
+			<name>Pan Reset</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_mode_control_v3"/>
+				<size>1</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_PAN_RESET</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
+			</v4l2>
+		</mapping>
 
 		<mapping>
 			<name>Tilt Reset</name>
 			<uvc>
 				<control_ref idref="logitech_motor_pantilt_reset"/>
+				<size>1</size>
+				<offset>1</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_TILT_RESET</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>Tilt Reset</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_mode_control_v3"/>
 				<size>1</size>
 				<offset>1</offset>
 				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
@@ -1707,6 +1763,7 @@
 				<menu_entry name="Auto" value="3"/>
 			</v4l2>
 		</mapping>
+		
 
 		<mapping>
 			<name>LED1 Frequency</name>
