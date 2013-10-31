@@ -125,7 +125,13 @@
 			<id>UVC_GUID_LOGITECH_CODECEX</id>
 			<value>49C532A0-4F15-4cfc-908A-5BCE154B1CEA</value>
 		</constant>
-
+		
+		<!-- UVC 1.1 H.264 public GUID -->
+		<constant type="guid">
+			<id>GUID_UVCX_H264_XU</id>
+			<value>A29E7641-DE04-47E3-8B2B-F4341AFF003B</value>
+		</constant>
+		
 		<!-- Control selectors for User Hardware Control (v1)-->
 		<constant type="integer">
 			<id>XU_HW_CONTROL_LED1</id>
@@ -406,6 +412,68 @@
 			<value>0x06</value>
 		</constant>
 
+		<!-- (UVC 1.1) H.264 uvcx control selectors -->
+		<constant type="integer">
+			<id>UVCX_VIDEO_CONFIG_PROBE</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_VIDEO_CONFIG_COMMIT</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_RATE_CONTROL_MODE</id>
+			<value>0x03</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_TEMPORAL_SCALE_MODE</id>
+			<value>0x04</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_SPATIAL_SCALE_MODE</id>
+			<value>0x05</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_SNR_SCALE_MODE</id>
+			<value>0x06</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_LTR_BUFFER_SIZE_CONTROL</id>
+			<value>0x07</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_LTR_PICTURE_CONTROL</id>
+			<value>0x08</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_PICTURE_TYPE_CONTROL</id>
+			<value>0x09</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_VERSION</id>
+			<value>0x0A</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_ENCODER_RESET</id>
+			<value>0x0B</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_FRAMERATE_CONFIG</id>
+			<value>0x0C</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_VIDEO_ADVANCE_CONFIG</id>
+			<value>0x0D</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_BITRATE_LAYERS</id>
+			<value>0x0E</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_QP_STEPS_LAYERS</id>
+			<value>0x0F</value>
+		</constant>
+		
 		<!-- Internal control selectors for the CodecEX XU -->
 		<constant type="integer">
 			<id>CXXU_STATIC_CONTROL</id>
@@ -475,6 +543,8 @@
 			<id>V4L2_CID_RAW_BITS_PER_PIXEL</id>
 			<value>0x0A046D72</value>
 		</constant>
+		<!-- UVC 1.1 H264 DEFINITIONS -->
+		
 	</constants>
 
 
@@ -1222,7 +1292,6 @@
 					<size>4</size>
 					<requests>
 						<request>SET_CUR</request>
-						<request>GET_CUR</request>
 						<request>GET_MIN</request>
 						<request>GET_MAX</request>
 						<request>GET_RES</request>
@@ -1367,6 +1436,32 @@
 						<request>GET_DEF</request>
 					</requests>
 				</control>
+				<!-- Controls for uvc 1.1 H.264 XU -->
+				<control id="uvcx_video_config_probe">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>0</index>
+					<size>46</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_commit">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_COMMIT</selector>
+					<index>1</index>
+					<size>46</size>
+					<requests>
+						<request>SET_CUR</request>
+					</requests>
+				</control>
+				
 			</controls>
 		</device>
 	</devices>
@@ -1760,6 +1855,7 @@
 				<v4l2_type>V4L2_CTRL_TYPE_MENU</v4l2_type>
 				<menu_entry name="Off" value="0"/>
 				<menu_entry name="On" value="1"/>
+				<menu_entry name="Blink" value="2"/>
 				<menu_entry name="Auto" value="3"/>
 			</v4l2>
 		</mapping>
@@ -1778,6 +1874,438 @@
 				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
 			</v4l2>
 		</mapping>
-
+		
+		<!-- Mappings for uvc 1.1 H264 -->
+		<!--
+		<mapping>
+			<name>Frame Interval</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>32</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_FRAME_INTERVAL</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>Bit Rate</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>32</size>
+				<offset>32</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_BIT_RATE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>Hints</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>16</size>
+				<offset>64</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_HINTS</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BITMASK</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>Configuration Index</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>16</size>
+				<offset>64</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_CONFIG_INDEX</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+						
+				<control id="uvcx_video_config_probe_wWidth">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>12</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wHeight">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>14</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wSliceUnits">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>16</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wSliceMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>18</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wProfile">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>20</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wIFramePeriod">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>22</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wEstimatedVideoDelay">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>24</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wEstimatedMaxConfigDelay">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>26</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bUsageType">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>28</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bRateControlMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>29</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bTemporalScaleMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>30</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bSpatialScaleMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>31</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bSNRScaleMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>32</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bStreamMuxOption">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>33</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bStreamFormat">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>34</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bEntropyCABAC">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>35</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bTimestamp">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>36</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bNumOfReorderFrames">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>37</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bPreviewFlipped">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>38</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bView">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>39</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bReserved1">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>40</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bReserved2">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>41</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bStreamID">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>42</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bSpatialILayerRatio">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>43</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wLeakyBucketSize">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>44</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+			-->
 	</mappings>
 </config>
