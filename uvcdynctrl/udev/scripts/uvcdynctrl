@@ -2,18 +2,19 @@
 ###################################################################################################
 # udev helper script for UVC devices to support dynamic controls.
 #
-# Version: 0.2
+# Version: 0.3
 #
 # Note that version 0.2 no longer works with older versions of udev. This script should be
 # compatible with udev >= 141.
 # Also check 80-uvcdynctrl.rules for more information.
+# 27-12-2013 <pj.assis@gmail.com> : set debug to 0
 ###################################################################################################
 
 # Constants
 version=0.3
 
 # Run-time configuration
-debug=1
+debug=0
 uvcdynctrlpath=uvcdynctrl
 
 # Determine log destination
