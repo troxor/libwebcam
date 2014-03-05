@@ -75,7 +75,7 @@ void print_libwebcam_error (char *format, ...);
 })
 
 
-void static print_libwebcam_c_error (CResult error, char *format, ...);
+static void print_libwebcam_c_error (CResult error, char *format, ...);
 
 static unsigned int get_control_dynamics_length(Device *device, unsigned int *names_length, unsigned int *choices_length);
 static Control *find_control_by_id (Device *dev, CControlId id);
