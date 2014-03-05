@@ -63,7 +63,19 @@ HandleList handle_list;
  */
 
 void print_libwebcam_error (char *format, ...);
-static void print_libwebcam_c_error (CResult error, char *format, ...);
+
+#define print_libwebcam_error_once(fmt, ...)                        \
+({                                                              \
+        static int __print_once;                               \
+                                                                \
+        if (!__print_once) {                                    \
+                __print_once = 1;                            \
+                print_libwebcam_error(fmt, ##__VA_ARGS__);      \
+        }                                                       \
+})
+
+
+void static print_libwebcam_c_error (CResult error, char *format, ...);
 
 static unsigned int get_control_dynamics_length(Device *device, unsigned int *names_length, unsigned int *choices_length);
 static Control *find_control_by_id (Device *dev, CControlId id);
@@ -1993,7 +2005,7 @@ static CResult refresh_control_list (Device *dev)
 				// of the next control, we have to manually increase the control ID,
 				// otherwise we risk getting stuck querying the erroneous control.
 				current_ctrl++;
-				print_libwebcam_error(
+				print_libwebcam_error_once(
 						"Warning: The driver behind device %s has a slightly buggy implementation\n"
 						"  of the V4L2_CTRL_FLAG_NEXT_CTRL flag. It does not return the next higher\n"
 						"  control ID if a control query fails. A workaround has been enabled.",
@@ -2003,7 +2015,7 @@ static CResult refresh_control_list (Device *dev)
 			else if(!r && v4l2_ctrl.id == current_ctrl) {
 				// If there was no error but the driver did not increase the control ID
 				// we simply cancel the enumeration.
-				print_libwebcam_error(
+				print_libwebcam_error_once(
 						"Error: The driver %s behind device %s has a buggy\n"
 						"  implementation of the V4L2_CTRL_FLAG_NEXT_CTRL flag. It does not raise an\n"
 						"  error or return the next control. Canceling control enumeration.",
@@ -2020,7 +2032,7 @@ static CResult refresh_control_list (Device *dev)
 			Control *ctrl = create_v4l2_control(dev, &v4l2_ctrl, v4l2_dev, &ret);
 			if(ctrl == NULL) {
 				if(ret == C_PARSE_ERROR || ret == C_NOT_IMPLEMENTED) {
-					print_libwebcam_error("Invalid or unsupported V4L2 control encountered: "
+					print_libwebcam_error_once("Invalid or unsupported V4L2 control encountered: "
 							"ctrl_id = 0x%08X, name = '%s'", v4l2_ctrl.id, v4l2_ctrl.name);
 					ret = C_SUCCESS;
 				}
@@ -2094,7 +2106,7 @@ next_control:
 			Control *ctrl = create_v4l2_control(dev, &v4l2_ctrl, v4l2_dev, &ret);
 			if(ctrl == NULL) {
 				if(ret == C_PARSE_ERROR || ret == C_NOT_IMPLEMENTED) {
-					print_libwebcam_error("Invalid or unsupported custom V4L2 control encountered: "
+					print_libwebcam_error_once("Invalid or unsupported custom V4L2 control encountered: "
 							"ctrl_id = 0x%08X, name = '%s'", v4l2_ctrl.id, v4l2_ctrl.name);
 					ret = C_SUCCESS;
 					continue;
@@ -2633,7 +2645,7 @@ static CResult refresh_device_list (void)
 					// continues. This is necessary because V4L1 devices will let
 					// refresh_device_details fail as they don't understand VIDIOC_QUERYCAP.
 					if(ret == C_V4L2_ERROR) {
-						print_libwebcam_error(
+						print_libwebcam_error_once(
 								"Warning: The driver behind device %s does not seem to support V4L2.",
 								dev->v4l2_name);
 						ret = C_SUCCESS;
