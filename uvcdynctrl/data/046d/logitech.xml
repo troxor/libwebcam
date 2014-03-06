@@ -13,12 +13,13 @@
 		<revision>0.32</revision>
 		<copyright>Copyright (c) 2006-2010 Logitech</copyright>
 		<history>
+
 			0.32 2013-03-27
 			- Added LED frequency V4L2 control mapping for V3 Logitech cameras
 
 			0.31 2013-02-25
 			- Added LED V4L2 control mapping for V3 Logitech cameras
-
+			
 			0.30, 2010-07-30:
 			- Added support for XU_TEST_PERIPHERAL_ACCESS_EXT_CONTROL.
 
