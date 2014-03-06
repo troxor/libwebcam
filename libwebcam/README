@@ -28,8 +28,13 @@ the addition of new controls or events is straightforward.
 
 Change log
 ----------
+0.2.5: 
+-reduce verbosity on loop warnings
 
-0.2.0 (under development):
+0.2.4:
+-send udev script debug messages to /dev/null
+
+0.2.0:
 - Reorganized the directory layout and build system (CMake 2.6 is required now).
 - Added packaging support (.deb and .tar.bz2).
 - Added support for raw/string controls.
