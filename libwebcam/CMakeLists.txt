@@ -16,8 +16,8 @@ project (LIBWEBCAM)
 add_library (webcam SHARED libwebcam.c dynctrl.c)
 add_library (webcam_static STATIC libwebcam.c dynctrl.c)
 
-set_target_properties (webcam PROPERTIES VERSION 0.2.5 SOVERSION 0 CLEAN_DIRECT_OUTPUT 1 OUTPUT_NAME "webcam")
-set_target_properties (webcam_static PROPERTIES VERSION 0.2.5 SOVERSION 0 CLEAN_DIRECT_OUTPUT 1 OUTPUT_NAME "webcam")
+set_target_properties (webcam PROPERTIES VERSION 0.2.6 SOVERSION 0 CLEAN_DIRECT_OUTPUT 1 OUTPUT_NAME "webcam")
+set_target_properties (webcam_static PROPERTIES VERSION 0.2.6 SOVERSION 0 CLEAN_DIRECT_OUTPUT 1 OUTPUT_NAME "webcam")
 
 
 
