@@ -103,7 +103,7 @@ install (
 )
 
 install (
-	FILES	../common/include/webcam.h
+	FILES	../common/include/webcam.h ../common/include/dynctrl-logitech.h
 	DESTINATION 	${CMAKE_INSTALL_PREFIX}/include
 )
 
