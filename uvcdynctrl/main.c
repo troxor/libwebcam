@@ -674,7 +674,10 @@ get_filename (const char *dir_path, const char *vid)
 	printf ( "checking dir: %s \n", dir_path);
 	while ((dp = readdir(dir)) != NULL) 
 	{
-		if((dp->d_type == DT_DIR) && (fnmatch("[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]", dp->d_name, 0) == 0))
+		/* not all filesystems return proper d_type */
+		if((dp->d_type != DT_DIR) && (dp->d_type != DT_UNKNOWN))
+			continue;
+		if(fnmatch("[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]", dp->d_name, 0) == 0)
 		{
 			if( strcasecmp(vid, dp->d_name) != 0)
 			{
